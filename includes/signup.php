@@ -12,14 +12,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once 'signup_controller.php';
 
         //Error Handler
-        if (is_form_empty($username, $pwd, $email)) {
+        $errors = [];
 
+        if (is_form_empty($username, $pwd, $email)) {
+            $errors["empty_input"] = "Please fill up all fields!";
         }
         if (is_email_invalid( $email)) {
-
+            $errors["invalid_email"] = "Your email is invalid!";
         }
         if (is_username_taken($pdo,  $username)) {
+            $errors["username_taken"] = "Sorry, your username is already taken!";
+        }
+        if (is_email_registered($pdo, $email)) {
+            $errors["email_used"] = "Your email is already registered!";
+        }
 
+
+        require_once 'config_session.php';
+
+        if ( $errors) {
+            $_SESSION["errors_signup"] = $errors;
+            header("location: ../index.php");
         }
 
     } catch (PDOException $e){
