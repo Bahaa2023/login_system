@@ -27,9 +27,11 @@ require_once 'includes/signup_view.php';
 <h3>Sign up</h3>
 
 <form action="includes/signup.php" method="post">
-    <input class="input" type="text" name="username" placeholder="Username">
-    <input class="input" type="password" name="pwd" placeholder="Password">
-    <input class="input" type="text" name="email" placeholder="E-Mail">
+
+    <?php   
+ signup_inputs();   
+    ?>
+    
     <button>Sign Up</button>
 </form>
 
@@ -43,3 +45,4 @@ check_signup_errors();
 
 
 </html>
+
